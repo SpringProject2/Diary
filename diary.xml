@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cw">
+
+	<!-- 갤러리 조회  -->
+	<select id="diary_list" resultType="diary" >
+		select * from Diary order by diaryContentRef DESC
+		<!-- idx 내림차순 -->
+	</select>
+
+	<!-- select를 제외한 insert, update, delete태그는 resultType을 기입하지 않는다 -->
+	<!-- 새 글 추가 -->
+	<insert id="diary_insert" parameterType="diary">
+			insert into Diary values(
+		    #{diaryContentRef},
+			#{diaryContent},
+			SYSDATE
+        )
+	</insert>
+	
+	<!-- 글 삭제 -->
+	<delete id="diary_delete" parameterType="int">
+		delete from Diary where diaryContentRef=#{diaryContentRef}
+	</delete>
+	
+	<!-- 수정을 위한 게시글 한 건 조회 -->
+	<select id="diary_one" resultType="diary" parameterType="int">
+		select * from Diary where diaryContentRef =#{diaryContentRef }
+	</select>
+	
+	<!-- 글 수정 -->
+	<update id="diary_update" parameterType="diary">
+		update Diary set
+		DiaryContent = #{ diaryContent},
+		diaryRegdate = diaryRegdate
+		where DiaryContentRef=#{diaryContentRef}
+	</update>
+
+
+
+</mapper>
+
+
+
